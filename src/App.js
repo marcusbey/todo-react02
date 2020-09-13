@@ -2,7 +2,34 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+class App extends React.Component {
+constructor(props){
+  super(props);
+    this.state = {
+      todoList:[],
+      activeItem:{
+        id: null, 
+        title: '',
+        completed:false,
+        },
+      editing: false,
+    }
+    this.fetchTasks = this.fetchTasks.bind(this)
+};
+// lifecycle methode
+componentWillMount(){
+  this.fetchTasks()
+}
+
+fetchTasks(){
+  console.log('Fetchning...')
+}
+
+fetchTasks(){
+
+}
+
+  render() {
     return (
         <div className="container">
 
@@ -28,5 +55,6 @@ function App() {
 
   );
 }
-
+}
 export default App;
+ 
