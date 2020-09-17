@@ -77,7 +77,19 @@ class App extends React.Component {
 
     const csrftoken = this.getCookie('csrftoken');
 
-    const url = "http://127.0.0.1:8000/api/task-create/";
+    let url = "http://127.0.0.1:8000/api/task-create/";
+
+    if(this.state.editing == true){
+      url = `http://127.0.0.1:8000/api/task-update/${this.state.activeItem.id}/`
+      this.setState({
+        editing: false
+      })
+    }
+
+
+
+
+
     fetch(url, {
       method: 'POST',
       headers: {
@@ -98,7 +110,7 @@ class App extends React.Component {
         console.log('ERROR:', error)
       })
   }
-
+// set state and change editing value
     startEdit(task){
       this.setState({
         activeItem: task,
@@ -134,6 +146,7 @@ class App extends React.Component {
                           </div>
 
                           <div style={{flex:1}}>
+                            {/* this is not going to be avalaible within this loop so we change the value to 'self'*/}
                             <button onClick={() => self.startEdit(task)} className="btn btn-sm btn-outline-info">Edit</button>
                           </div>
 
@@ -163,4 +176,9 @@ export default App;
       //create a funciton 
 
 //1- create a function which will be in charge of changing that state
-//  and change the url submission and decide wheither we are updating an item or creating a neaw one.
+//  and change the url submission and decide whether we are updating an item or creating a neaw one.
+
+//2- add an event handler that will alow to update 
+
+// That url take the item and passes into the url of create so we need to write a little condition 
+
