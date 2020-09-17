@@ -74,25 +74,29 @@ class App extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     console.log('ITEM:', this.state.activeItem);
-    var url = "http://127.0.0.1:8000/api/task-create/"
+
+    const csrftoken = this.getCookie('csrftoken');
+
+    const url = "http://127.0.0.1:8000/api/task-create/";
     fetch(url, {
-      methode: 'POST',
+      method: 'POST',
       headers: {
         'content-type': 'application/json',
+        'X-CSRFToken': csrftoken,
       },
-      body: JSON.stringify(this.activeItem)
+      body: JSON.stringify(this.state.activeItem)
     }).then((response) => {
-      this.fetchTasks()
+      this.fetchTasks();
       this.setState({
-        activeItem:{
+          activeItem:{
           id: null, 
           title: '',
           completed:false,
           }
-      }).catch(function(error){
+      })
+    }).catch(function(error){
         console.log('ERROR:', error)
       })
-    })
   }
 
     render() {
@@ -105,7 +109,7 @@ class App extends React.Component {
                     <form onSubmit={this.handleSubmit} id="form">
                       <div className="flex-wrapper">
                           <div style={{flex: 6}}>
-                              <input onChange={this.handleChange} className="form-control" id="title"  type="text" name="title" placeholder="Add task.." />
+                              <input onChange={this.handleChange} className="form-control" id="title" value={this.state.activeItem.title} type="text" name="title" placeholder="Add task.." />
                               {/*onChange="" */}
                           </div>
                           <div style={{flex: 1}}>
