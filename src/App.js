@@ -99,8 +99,15 @@ class App extends React.Component {
       })
   }
 
+    startEdit(task){
+      this.setState({
+        activeItem: task,
+        editing: true,
+      })
+    }
     render() {
       const tasks = this.state.todoList;
+      const self = this;
       return (
           <div className="container">
 
@@ -127,7 +134,7 @@ class App extends React.Component {
                           </div>
 
                           <div style={{flex:1}}>
-                            <button className="btn btn-sm btn-outline-info">Edit</button>
+                            <button onClick={() => self.startEdit(task)} className="btn btn-sm btn-outline-info">Edit</button>
                           </div>
 
                           <div style={{flex:1}}>
@@ -145,3 +152,15 @@ class App extends React.Component {
   }
 }
 export default App;
+
+
+
+// - Form submission  
+
+//1-  Add an eventhandler that set this form to the value that we clicked on 
+//2-  Change the active item to that object 
+//3-  Change the value of editing to true. 
+      //create a funciton 
+
+//1- create a function which will be in charge of changing that state
+//  and change the url submission and decide wheither we are updating an item or creating a neaw one.
