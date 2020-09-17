@@ -17,7 +17,26 @@ class App extends React.Component {
       this.fetchTasks = this.fetchTasks.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.getCookie = this.getCookie.bind(this);
   }; 
+
+  getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
   // lifecycle methode
   // whenever this is called we will triger an other function called fetchMask
   componentWillMount(){
@@ -55,6 +74,25 @@ class App extends React.Component {
   handleSubmit(e){
     e.preventDefault();
     console.log('ITEM:', this.state.activeItem);
+    var url = "http://127.0.0.1:8000/api/task-create/"
+    fetch(url, {
+      methode: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(this.activeItem)
+    }).then((response) => {
+      this.fetchTasks()
+      this.setState({
+        activeItem:{
+          id: null, 
+          title: '',
+          completed:false,
+          }
+      }).catch(function(error){
+        console.log('ERROR:', error)
+      })
+    })
   }
 
     render() {
