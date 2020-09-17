@@ -138,7 +138,7 @@ class App extends React.Component {
 
 
     strikeUnstrike(task){
-      task.complete = !task.completed;
+      task.completed = !task.completed;
       const csrftoken = this.getCookie('csrftoken');
       let url = `http://127.0.0.1:8000/api/task-update/${task.id}/`;
         fetch(url, {
